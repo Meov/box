@@ -19,59 +19,62 @@ struct ListNode {
 
 
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
+    struct ListNode *list1 = l1;
+    struct ListNode *list2 = l2;
     unsigned int sum = 0;
-    unsigned int sum_tem = 0;	
-
-    struct ListNode* list_sum = (struct ListNode*)malloc(sizeof(struct ListNode));
-    if(!list_sum) return NULL;
+    unsigned int sum_inc = 0; //进位位
+    unsigned int list1_val = 0;
+    unsigned int list2_val = 0;
+    struct ListNode *list_sum = (struct ListNode*)malloc(sizeof(struct ListNode));
     list_sum->next = NULL;
-    int list_lenth = 0;
-    unsigned int num1 = 0;
-    unsigned int num2 = 0; 
-    struct ListNode* list1 = l1;
-    struct ListNode* list2 = l2;
-    //printf("num1: %d,num2: %d\n",num1,num2);
-    struct ListNode* list_sum_final;
-    list_sum->next = NULL;
-    list_sum_final = list_sum; 
-    //获取链表长度
-    while ((list1->next)||(list2->next))
-    {
-       
-	int Proportion =  (int)pow(10,list_lenth);
-	
-	num1 += (list1->val)*Proportion;        
-	num2 += (list2->val)*Proportion;
-    	printf("num1: %d num 2:%d\n",num1, num2);
-	list_lenth++;
-        list1 = list1->next; 
-        list2 = list2->next;
-    } 
-	sum = num1+num2;
-    while (list_lenth--)
-    {
-        struct ListNode* list_sum_tem = 
-        (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode *list_sum_tem = list_sum;
+    struct ListNode *list_temp;
 
-    
-	list_sum_tem->val = sum / (unsigned int)(pow(10,list_lenth));
-	sum = sum % (unsigned int)(pow(10,list_lenth));    	
-    	
-	printf("val: %d\n",list_sum_tem->val);
-	
-	list_sum_tem->next = list_sum->next;
-        list_sum->next = list_sum_tem;
+    if(list1 == NULL && list2 == NULL){
+        printf("lists entered are all NULL\n");
+        return NULL;
     }
-    //list_sum->next = NULL;
-    list_sum_final = list_sum->next;
-    while(list_sum_final){
-	printf("----val: %d\n",list_sum_final->val);
-	list_sum_final = list_sum_final->next; 
+    while (list1 || list2)
+    {
+        list_temp = (struct ListNode *)malloc(sizeof(struct ListNode));
+        list_temp->next = NULL;
+
+        if(list1){
+            list1_val = list1->val;
+            list1 = list1->next;
+        }else{
+            list1_val = 0; 
+        }   
+        if(list2){
+            list2_val = list2->val;
+            list2 = list2->next;   
+        }else{
+            list2_val = 0;
+        }
+        sum = list1_val + list2_val;
+        printf("----sum: %d sum_inc: %d\n",sum,sum_inc);
+        sum = sum + sum_inc;
+        //头插法扩展链表
+        
+        if(sum >= 10){ //有进位位
+            sum_inc = 1; 
+            list_temp->val = sum % 10;
+        }else{         //无进位位
+            list_temp->val = sum;
+            sum_inc = 0;
+        }
+
+        list_sum_tem->next = list_temp;
+        list_sum_tem = list_temp;
     }
-
-    printf("answer is :%d\n",sum);
-    return list_sum_final;
-
+    if(sum_inc){
+        list_temp = (struct ListNode *)malloc(sizeof(struct ListNode));
+        list_temp->next = NULL;
+        list_temp->val = sum_inc;
+        list_sum_tem->next = list_temp;
+        list_sum_tem = list_temp;
+    }
+    return list_sum->next;
 }
 
 
