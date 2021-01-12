@@ -1,8 +1,8 @@
 cc = gcc
 program = test
-src = test-2.c
+src = test.c
 
 $(program):$(src)
-	$(cc) -o $(program) $(src) -lm
+	$(cc) -o $(program) $(src) -lm &
 clean:
 	rm -rf $(program)

@@ -57,7 +57,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
         //头插法扩展链表
         
         if(sum >= 10){ //有进位位
-            sum_inc = 1; 
+            sum_inc %= 10; 
             list_temp->val = sum % 10;
         }else{         //无进位位
             list_temp->val = sum;
