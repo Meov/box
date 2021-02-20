@@ -1,0 +1,5 @@
+make 
+
+run main -p 0
+    p means PCR 
+    0 means number of PCR
