@@ -1,18 +1,28 @@
+
+#include <string.h>
 #include <stdio.h>
-#include<string.h>
+#define MAXSIZE 100000
+ 
+int main()
+{
+	int i;
+	int j;
+    char arr[MAXSIZE];
+    for(i=0;i<100000;i++)
+    {
+#if 0
+	    memset(arr,'1',sizeof(arr));
+#else
+	    for(j=0;j<MAXSIZE;j++)
+		    arr[j] = '1';
+#endif
+    }
 
-int main(int argc, char *argv[]){
 
-	int a[10];
-	int i = 0;
+	for(i = 0 ; i < MAXSIZE; i++){
+		printf("%c",arr[i]);
 
-	memset(a,1,sizeof(a));
-
-	printf("sizeof a: %ld\n",sizeof(a));
-	
-	for(i = 0; i < 10; i++){
-		printf("a[%d]: [hex]0x%x  [dec]%d\n",i,a[i],a[i]);
 	}
 
-	return 0;
+    return 0;
 }

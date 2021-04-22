@@ -1,9 +1,14 @@
-cc = gcc
-program = test
-src = main.c
+CC = gcc
+TARGET = test
+OBJ = main.o
+SRC = main.c
 
-$(program):$(src)
-	$(cc) -o $(program) $(src)
+$(TARGET):$(OBJ)
+	$(CC) -o $(TARGET) $(OBJ)
+$(OBJ):$(SRC)
+	$(CC) -o $@ -c $<
+
+.PHONY : clean
 clean:
-	rm -rf $(program)
+	rm -rf $(TARGET) $(OBJ)
 
