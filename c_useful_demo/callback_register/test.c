@@ -62,23 +62,25 @@ typedef struct WORKER{
 	pf_callback worker_action;
 }worker;
 
-worker *worker_set[WORK_NUMS] = {NULL};
+static worker *worker_set[WORK_NUMS];
 
 int worker_register(worker *p){
-	int worker_num;
+	int worker_num = 0;
 	if(p == NULL) return;
-	while(worker_set[worker_num]){
+
+	while(worker_set[worker_num]){ //find a free space to store function
 		worker_num ++;
-		printf(" num: %d\n",worker_num);
 		if(worker_num > WORK_NUMS){
-			printf("no space free for workers!\n");	
-			free(p);
-			p = NULL;
-			return -1;
-		}
+                        printf("no space free for workers!\n");
+                        free(p);
+                        p = NULL;
+                        return -1;
+                }
+
 	}
-	printf("worker %d register!\n",worker_num);
+
 	worker_set[worker_num] = p;
+	printf("worker %d register! addr: %p\n",worker_num,p);
 	return 0;
 }
 
@@ -86,10 +88,12 @@ int worker_register(worker *p){
 int worker_run(void){
 	int worker_num = 0;
 	printf("worker runnunununu\n");
-		
+	static int cnt;
+
 	while((worker_set[worker_num])&&(worker_num < WORK_NUMS)){
 		worker_set[worker_num]->worker_action(worker_set[worker_num]->worker_id);
-		printf("worker %d run!\n",worker_num);
+		printf("worker %d run and worker: %p will be freed, cnt: %d\n",worker_num,worker_set[worker_num],cnt);
+		cnt++;
 		/*free the function point*/
 		free(worker_set[worker_num]);
 		worker_set[worker_num] = NULL;
@@ -109,17 +113,20 @@ int worker_two(int a){
 	return 0;
 }
 
-int main(){
+int main(int argc,char *argv[]){
 	int err = -1;
-	worker *worker_real;
-	worker_real = (worker *)malloc(sizeof(worker));
-	worker_real->worker_id = 1;
-	worker_real->worker_action = worker_one;	
-	worker_register(worker_real);
-//	worker_run();	
-	worker_real->worker_id = 2;
-	worker_real->worker_action = worker_one;	
-	worker_register(worker_real);
-	worker_run();	
+	worker *worker_real_1;
+	worker *worker_real_2;
+	worker_real_1 = (worker *)malloc(sizeof(worker));
+	worker_real_1->worker_id = 1;
+	worker_real_1->worker_action = worker_one;
+	worker_register(worker_real_1);
+	//worker_run();
+
+	worker_real_2 = (worker *)malloc(sizeof(worker));
+	worker_real_2->worker_id = 2;
+	worker_real_2->worker_action = worker_one;
+	worker_register(worker_real_2);
+	worker_run();
 }
 //#endif
