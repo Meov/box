@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 
-#define MAX_SINGLE_BUF_SIZE 100     //单个节点数据容量
-#define MAX_BUF_NODE_NUM 100         //总共节点数
+#define MAX_SINGLE_BUF_SIZE 800     //单个节点数据容量
+#define MAX_BUF_NODE_NUM 10         //总共节点数
 
 /*
     每个buffer_node包含8k的字符空间，总共1000个buffer_node
@@ -14,7 +14,7 @@
 #define NULLPTR (void *)0
 
 
-char mem[1000];  //在上模拟一个40M的堆空间
+char mem[8096];  //在堆上模拟一个8M的堆空间
 
 
 
@@ -87,7 +87,7 @@ typedef struct BufferNode_Tag
 
 DlistNode free_buffer_list;
 //BufNode *const bffer_array = (BufNode *)BUF_ADDR
-BufNode *bffer_array = (BufNode *)mem;
+BufNode *bffer_array = (BufNode *)mem;  //模拟全部的内存  8M
 
 /*
     将8M的内存空间，分成1000个小单元，每个单元大小为8192（8K）
@@ -112,15 +112,15 @@ void dlist_add_after(DlistNode *node,DlistNode *newnode){
 int buffer_init(void){
     int i;
     //初始化数据块 8Mb的数据块
-    memset((void *)bffer_array,0x00,sizeof(BufNode)*MAX_BUF_NODE_NUM);
+    memset((void *)bffer_array,0,sizeof(*bffer_array));
     //初始资源列表，存放每二个数据单元的地址
-    printg("enter :%s\n",__func__);
+    printf("enter :%s\n",__func__);
 	DLIST_INIT(&free_buffer_list);
     //初始化空闲列表
-    
+    printf("BufNode size: %lu sizeof(*bffer_array) %lu\n",sizeof(BufNode),sizeof(mem));
     for(i = 0; i<MAX_BUF_NODE_NUM;i++){  //地址往后偏移
-        bffer_array[i].state = BUF_FREE;
-        printf("free_buffer_list addr : %016x,bffer_array.dlnode : %016x\n",&free_buffer_list,&(bffer_array[i]));
+	bffer_array[i].state = BUF_FREE;
+      //  printf("free_buffer_list addr : %p,bffer_array.dlnode : %p\n",&free_buffer_list,&(bffer_array[i]));
         dlist_add_before(&free_buffer_list, &(bffer_array[i].dlnode)); //将数据节点以头插法的形式插入列表中
     }
     return 0;
@@ -157,7 +157,7 @@ void* buffer_alloc(unsigned int size){
     if(dlnode != &free_buffer_list){
         DLIST_DEL(&(buffer_node_ptr->dlnode)); //删除buffer中的节点
         buffer_node_ptr->state = BUF_USED;
-        printf("++++++++++++++++setted addr :0x%x\n",buffer_node_ptr);
+        printf("++++++++++++++++setted addr :%p\n",buffer_node_ptr);
     }
     else
     {
@@ -189,21 +189,28 @@ void buffer_free(void * buf){
 int main(int argv, char **argc){
     char* ptr_test[10];
     BufNode *buffer_node_ptr[10]; 
-    
+    char *malloced_mem; 
     int i = 0;
-    buffer_init();   
+    buffer_init();
     printf("init end!\n");
-#if 0
-    for(i = 0; i<43; i++){
-        buffer_node_ptr[i] = (BufNode*)buffer_alloc(5);
-        printf("================num %d addr :0x%x \n",i,buffer_node_ptr[i]); 
+#if 1
+//    for(i = 0; i<12; i++){
+        malloced_mem = (char*)buffer_alloc(800);
+ 	if(malloced_mem != NULL)
+	printf("num %d addr :0x%p \n",i,malloced_mem); 
+	
 
-       //buffer_node_ptr = ( BufNode *)(ptr_test[i]);
+       	//buffer_node_ptr = ( BufNode *)(ptr_test[i]);
         //printf("state: = 0x%x\n",buffer_node_ptr[i]->state);
         //if(i % 2 == 0 ){
            // printf("\n");
            // buffer_free(buffer_node_ptr[i]);
         //}     
-    }
+ //   }
+	char buf = 0x12;
+	for(i = 0; i<8096; i++){
+		malloced_mem[i] = buf;
+	}
+	
 #endif
 }
