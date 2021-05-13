@@ -1,4 +1,4 @@
-TARGET = fork_test
+TARGET = shell_test
 OBJ = main.o
 
 $(TARGET) : $(OBJ)
