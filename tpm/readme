@@ -1,3 +1,0 @@
-1. tpm_tools_tss include tpm tools tss1 and tpm_dev 
-2. tpm_tools should install via command: sudo apt get install tpm_tools
-3. test app is an example for PCR updating
