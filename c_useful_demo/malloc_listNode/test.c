@@ -211,6 +211,8 @@ int main(int argv, char **argc){
 	for(i = 0; i<8096; i++){
 		malloced_mem[i] = buf;
 	}
+
 	
+	buffer_free(malloced_mem);
 #endif
 }
