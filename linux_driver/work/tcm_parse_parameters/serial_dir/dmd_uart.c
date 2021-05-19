@@ -8,21 +8,23 @@
 #include <errno.h>
 #include <string.h>
 
-static const char *uart0 = "/dev/ttyS0";
-
+#if 0
 static char tcm_tx_buffer[18] = {0x3A,0x00,0x0E,0x34,0x00,0xC1,0x00,0x00,0x00,0x0C,0x00,0x00,0x80,0x99,0x00,0x01,0xB8,0x97};
 
 static char tcm_pcr_extend[52] = {0x3a, 0x00, 0x30, 0x0a, 0x00, 0xc1, 0x00, 0x00, 0x00, 0x2e, 0x00, 0x00, 0x80, 0x14, 0x00, 0x00, 0x00, 0x01, 0x12, 0x43, 0x56, 0x84, 0x78, 0x91, 0x27, 0x94, 0x77, 0x59, 0x88, 0xab, 0xcd, 0xeb, 0xac, 0xdb, 0xac, 0xeb, 0xad, 0xe1, 0x23, 0xa7, 0x89, 0xb9, 0x81, 0xb4, 0x1c, 0xd3, 0xe1, 0x82, 0xad, 0xc1, 0x78, 0x9b};
 
 char *str = "hello uart assistant!";
+#endif
 
 int uart_init(const char *uart_name){
-	int fd;
-	if((fd = open(uart0, O_RDWR|O_NONBLOCK))<0){//非阻塞读方式
-                printf("open %s is failed",uart0);
+	int fd;	
+
+	if((fd = open(uart_name, O_RDWR|O_NONBLOCK))<0){//非阻塞读方式
+                //printf("open %s failed",uart0);
+                perror("Error: open uart0 failed");
 		return -1;	
 	}else{
-                printf("open %s is successfully!\n",uart0);
+                printf("open %s successfully!\n",uart_name);
 		return fd;
 	}
 
@@ -110,7 +112,7 @@ int set_opt(int fd,int nSpeed, int nBits, char nEvent, int nStop)
 	return 0;
 }
 
-
+#if 0
 int send_recive(int dev, char *tx, char *rx, int tx_len){
 	int nByte = 0;
 	int i = 0;
@@ -131,7 +133,7 @@ int send_recive(int dev, char *tx, char *rx, int tx_len){
 	usleep(10000);
 	nByte = read(dev, rx_buffer, 512);
 	if(nByte < 0){
-		printf("read uart0 err\n");
+		printf("Error: read uart0 err\n");
 		return -1;
 	}
 #if 0
@@ -144,6 +146,7 @@ int send_recive(int dev, char *tx, char *rx, int tx_len){
 	memcpy(rx, rx_buffer, nByte);
 	return nByte;
 }
+#endif
 
 int close_uart(int fd){
 	

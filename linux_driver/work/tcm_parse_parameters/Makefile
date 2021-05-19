@@ -1,25 +1,31 @@
 CROSS_COMPILE ?= arm-linux-gnueabi-
 TARGET = dmd_tcm_test
 
+CROSS_COMPILE ?= 
+
+
 ARCH：= arm
 CC:= $(CROSS_COMPILE)gcc
 LD:= $(CROSS_COMPILE)ld
 OBJCOPY	:= $(CROSS_COMPILE)objcopy
 OBJDUMP	:= $(CROSS_COMPILE)objdump
 
-
 INCDIRS := serial_dir\
 		crc\
 		app\
+		tcm_driver
 
 SRCDIRS := serial_dir \
 		app\
-		crc
+		tcm_driver\
+		crc\
 
 INCLUDE	:= $(patsubst %, -I %, $(INCDIRS))
 
 CFILES	:=$(foreach dir, $(SRCDIRS),$(wildcard $(dir)/*.c))
 
+#print:
+#	@echo CFILES=$(CFILES)
 CFILENDIR	:= $(notdir  $(CFILES))
 VPATH                   := $(SRCDIRS)
 OBJS	:= $(patsubst %, obj/%, $(CFILENDIR:.c=.o))
@@ -30,8 +36,6 @@ $(TARGET) :$(OBJS)
 $(OBJS) : obj/%.o : %.c
 	$(CC) $(INCLUDE) -o $@ -c $<
 
-#print:
-#	@echo OBS=$(OBS)
 
 #单一目录下的Makefile
 #OBJ = test.o crc.o
