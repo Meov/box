@@ -10,6 +10,11 @@ LD:= $(CROSS_COMPILE)ld
 OBJCOPY	:= $(CROSS_COMPILE)objcopy
 OBJDUMP	:= $(CROSS_COMPILE)objdump
 
+
+OBJ_DIR  := obj
+
+$(shell if [ ! -e $(OBJ_DIR) ]; then mkdir -p $(OBJ_DIR); fi)
+
 INCDIRS := serial_dir\
 		crc\
 		app\
@@ -33,7 +38,7 @@ OBJS	:= $(patsubst %, obj/%, $(CFILENDIR:.c=.o))
 $(TARGET) :$(OBJS)
 	$(CC) -o $(TARGET) $(OBJS)
 
-$(OBJS) : obj/%.o : %.c
+$(OBJS) : $(OBJ_DIR)/%.o : %.c
 	$(CC) $(INCLUDE) -o $@ -c $<
 
 
@@ -58,4 +63,4 @@ $(OBJS) : obj/%.o : %.c
 
 .PHONY: clean
 clean:
-	rm -rf ${OBJS} ${TARGET}
+	rm -rf $(OBJS) $(TARGET) $(OBJ_DIR)
