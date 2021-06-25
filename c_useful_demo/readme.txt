@@ -9,4 +9,4 @@ malloc_listNode  : creat malloc / free by using double list
 mutex_lock       : dead lock use example
 shell_test       : a simple realization of shell using fork and exceve
 union_test 	 : union using examples. reference ../work/tcm fo details
-	 	  
+lib_test	 : shared libs test including compiling and binary files running 
