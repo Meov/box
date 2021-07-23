@@ -1,0 +1,4 @@
+usage: [-h] [-v] [-i interval].
+       [-h]           ----- help.
+       [-v]           ----- verbose.
+       [-i interval]  ----- trace interval.
