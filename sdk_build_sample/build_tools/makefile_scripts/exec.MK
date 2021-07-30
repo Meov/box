@@ -1,0 +1,121 @@
+ifeq ($(strip $(LOCAL_MODULE)),)
+ifeq ($(strip $(LOCAL_MODULE_STEM)),)
+$(error LOCAL_MODULE & LOCAL_MODULE_STEM is not defined in $(LOCAL_PATH)!!!)
+else
+LOCAL_MODULE := $(LOCAL_MODULE_STEM)
+endif
+endif
+
+ifeq ($(strip $(LOCAL_MODULE_CLASS)),)
+LOCAL_MODULE_CLASS := EXECUABLE
+endif
+
+ifeq ($(strip $(LOCAL_MODULE_STEM)),)
+LOCAL_MODULE_STEM := $(LOCAL_MODULE)
+endif
+
+target_name := $(LOCAL_MODULE_STEM)$(LOCAL_MODULE_SUFFIX)
+
+ifeq ($(strip $(call is_prbt_removed,$(LOCAL_MODULE))),yes)
+target_name :=
+endif
+############################################
+#we need a target
+#if we have no target, do nothing
+############################################
+ifneq ($(strip $(target_name)),)
+
+target_do_dir := $(TARGET_DO_DIR)/$(LOCAL_MODULE_CLASS)/$(LOCAL_MODULE)
+
+LINKED_TARGET := $(target_do_dir)/LINKED/$(target_name)
+
+ifeq ($(strip $(LOCAL_CC)),)
+LOCAL_CC := $(CROSS_COMPILE)gcc
+endif
+
+ifeq ($(strip $(LOCAL_CXX)),)
+LOCAL_CXX := $(CROSS_COMPILE)g++
+endif
+
+
+ALL_STATIC_LIBRARIES := $(LOCAL_STATIC_LIBRARIES)
+ALL_SHARED_LIBRARIES := $(LOCAL_SHARED_LIBRARIES)
+
+all_static_libraries := \
+    $(foreach lib,$(ALL_STATIC_LIBRARIES),$(call generate_fullpath_static_libs,$(lib)))
+
+all_shared_libraries := \
+    $(foreach lib,$(ALL_SHARED_LIBRARIES),$(call generate_fullpath_shared_libs,$(lib)))
+
+import_includes := $(target_do_dir)/import_includes
+import_includes_depends := \
+    $(strip $(foreach lib,$(ALL_STATIC_LIBRARIES),$(TARGET_DO_DIR)/STATIC_LIBS/$(lib)/export_includes)) \
+    $(strip $(foreach lib,$(ALL_SHARED_LIBRARIES),$(TARGET_DO_DIR)/SHARED_LIBS/$(lib)/export_includes))
+$(import_includes): $(import_includes_depends)
+	$(silent) echo Generate import_includes file $@
+	$(silent) mkdir -p $(dir $@) && rm -rf $@
+ifneq ($(strip $(import_includes_depends)),)
+	$(silent) for inc in $^; do \
+	          cat $$inc >> $@; \
+            done
+else
+	$(silent) touch $@
+endif
+
+LOCAL_CFLAGS += -fPIE
+LOCAL_CFLAGS += -DBUILD_SDK
+
+$(LINKED_TARGET): PRIVATE_CC := $(LOCAL_CC)
+$(LINKED_TARGET): PRIVATE_CXX := $(LOCAL_CXX)
+$(LINKED_TARGET): PRIVATE_CFLAGS := $(LOCAL_CFLAGS)
+$(LINKED_TARGET): PRIVATE_C_INCLUDES := $(LOCAL_C_INCLUDES)
+$(LINKED_TARGET): PRIVATE_IMPORT_C_INCLUDE_DIRS := $(import_includes)
+$(LINKED_TARGET): PRIVATE_LDFLAGS := $(LOCAL_LDFLAGS)
+$(LINKED_TARGET): PRIVATE_LDLIBS := $(LOCAL_LDLIBS)
+$(LINKED_TARGET): PRIVATE_STATIC_LIBRARIES := $(all_static_libraries)
+$(LINKED_TARGET): PRIVATE_SHARED_LIBRARIES := $(all_shared_libraries)
+$(LINKED_TARGET): PRIVATE_ASFLAGS := $(LOCAL_ASFLAGS)
+$(LINKED_TARGET): PRIVATE_CPPFLAGS := $(LOCAL_CPPFLAGS)
+$(LINKED_TARGET): PRIVATE_PREBUILT_OBJ_FILES := $(LOCAL_PREBUILT_OBJ_FILES)
+
+# C source files to .o
+c_source_files := $(filter %.c,$(LOCAL_SRC_FILES))
+c_objects := $(addprefix $(target_do_dir)/,$(c_source_files:.c=.o))
+
+$(c_objects): PRIVATE_C_OBJECTS_CFLAGS :=
+$(c_objects): PRIVATE_C_OBJECTS_INCLUDES :=
+
+ifneq ($(strip $(c_objects)),)
+$(c_objects): $(target_do_dir)/%.o: $(LOCAL_PATH)/%.c
+	$(compile-c-to-o)
+	@echo "we are going tp compile-c-to-o"
+-include $(c_objects:%.o=%.P)
+endif
+
+# C++ source files to .o
+c++_source_files := $(filter %.cpp,$(LOCAL_SRC_FILES))
+c++_objects := $(addprefix $(target_do_dir)/,$(c++_source_files:.cpp=.o))
+
+$(c++_objects): PRIVATE_CPP_OBJECTS_CFLAGS :=
+
+ifneq ($(strip $(c++_objects)),)
+$(c++_objects): $(target_do_dir)/%.o: $(LOCAL_PATH)/%.cpp
+	$(compile-c++-to-o)
+-include $(c++_objects:%.o=%.P)
+endif
+
+all_objects := $(c_objects) $(c++_objects)
+$(all_objects): | $(import_includes)
+
+$(LINKED_TARGET): PRIVATE_ALL_OBJECTS := $(all_objects)
+
+$(LINKED_TARGET): $(all_objects)
+	$(compile-o-to-execu)
+
+ifeq ($(strip $(LOCAL_MODULE_PATH)),)
+LOCAL_MODULE_PATH := $(TARGET_OUT_SYSTEM_DIR)/bin
+endif
+
+include $(MFILES_DIR)/module_target.MK
+
+endif

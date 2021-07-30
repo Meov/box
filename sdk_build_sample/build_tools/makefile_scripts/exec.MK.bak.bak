@@ -1,0 +1,62 @@
+LOCAL_MODULE_CLASS := EXECUABLE
+target_do_dir := $(TARGET_DO_DIR)/$(LOCAL_MODULE_CLASS)/$(LOCAL_MODULE)
+
+ifeq ($(strip $(LOCAL_CC)),)
+LOCAL_CC := $(CROSS_COMPILE)gcc
+endif
+
+ifeq ($(strip $(LOCAL_CXX)),)
+LOCAL_CXX := $(CROSS_COMPILE)g++
+endif
+
+ALL_STATIC_LIBRARIES := $(LOCAL_STATIC_LIBRARIES)
+ALL_SHARED_LIBRARIES := $(LOCAL_SHARED_LIBRARIES)
+
+LOCAL_CFLAGS += -fPIE
+LOCAL_CFLAGS += -DBUILD_SDK
+
+$(LINKED_TARGET): PRIVATE_CC := $(LOCAL_CC)
+$(LINKED_TARGET): PRIVATE_CXX := $(LOCAL_CXX)
+$(LINKED_TARGET): PRIVATE_CFLAGS := $(LOCAL_CFLAGS)
+$(LINKED_TARGET): PRIVATE_C_INCLUDES := $(LOCAL_C_INCLUDES)
+$(LINKED_TARGET): PRIVATE_IMPORT_C_INCLUDE_DIRS := $(import_includes)
+$(LINKED_TARGET): PRIVATE_LDFLAGS := $(LOCAL_LDFLAGS)
+$(LINKED_TARGET): PRIVATE_LDLIBS := $(LOCAL_LDLIBS)
+$(LINKED_TARGET): PRIVATE_STATIC_LIBRARIES := $(all_static_libraries)
+$(LINKED_TARGET): PRIVATE_SHARED_LIBRARIES := $(all_shared_libraries)
+$(LINKED_TARGET): PRIVATE_ASFLAGS := $(LOCAL_ASFLAGS)
+$(LINKED_TARGET): PRIVATE_CPPFLAGS := $(LOCAL_CPPFLAGS)
+$(LINKED_TARGET): PRIVATE_PREBUILT_OBJ_FILES := $(LOCAL_PREBUILT_OBJ_FILES)
+
+# C source files to .o
+c_source_files := $(filter %.c,$(LOCAL_SRC_FILES))
+c_objects := $(addprefix $(target_do_dir)/,$(c_source_files:.c=.o))
+
+
+$(c_objects): PRIVATE_C_OBJECTS_CFLAGS :=
+$(c_objects): PRIVATE_C_OBJECTS_INCLUDES :=
+
+ifneq ($(strip $(c_objects)),)
+$(c_objects): $(target_do_dir)/%.o: $(LOCAL_PATH)/%.c
+	$(compile-c-to-o)
+-include $(c_objects:%.o=%.P)
+endif
+
+# C++ source files to .o
+c++_source_files := $(filter %.cpp,$(LOCAL_SRC_FILES))
+c++_objects := $(addprefix $(target_do_dir)/,$(c++_source_files:.cpp=.o))
+
+$(c++_objects): PRIVATE_CPP_OBJECTS_CFLAGS :=
+
+ifneq ($(strip $(c++_objects)),)
+$(c++_objects): $(target_do_dir)/%.o: $(LOCAL_PATH)/%.cpp
+	$(compile-c++-to-o)
+-include $(c++_objects:%.o=%.P)
+endif
+
+all_objects := $(c_objects) $(c++_objects)
+
+$(LINKED_TARGET): PRIVATE_ALL_OBJECTS := $(all_objects)
+
+$(LINKED_TARGET): $(all_objects)
+	$(compile-o-to-execu)

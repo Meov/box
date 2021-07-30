@@ -1,0 +1,19 @@
+export CLEAR_MFILE := $(MFILES_DIR)/clear_vars.MK
+
+export EXECUTABLE_MFILE := $(MFILES_DIR)/exec.MK
+
+export STATIC_LIB_MFILE := $(MFILES_DIR)/a.MK
+
+export SHARED_LIB_MFILE := $(MFILES_DIR)/so.MK
+
+export PREBUILT_MFILE := $(MFILES_DIR)/prb.MK
+
+export MODULE_MFILE := $(MFILES_DIR)/module.MK
+
+export BUILDING2PREBUILT_MFILE := $(MFILES_DIR)/b2prbt_CIM.mk
+
+export INSTALL2PREBUILT_MFILE := $(MFILES_DIR)/b2prbt_IM.mk
+
+export REMOVING_MFILE := $(MFILES_DIR)/b2prbt_M.mk
+
+export PRBTCDF_MFILE := $(MFILES_DIR)/b2prbt_XXX.mk
