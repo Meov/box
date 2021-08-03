@@ -178,6 +178,7 @@ $(hide) $(PRIVATE_CXX) \
 	-Wl,--whole-archive \
 	$(call normalize-libraries,$(PRIVATE_STATIC_LIBRARIES)) \
 	-Wl,--no-whole-archive \
+	-Wl,-Bdynamic \
 	$(call normalize-libraries,$(PRIVATE_SHARED_LIBRARIES)) \
 	-L $(TARGET_COMMON_LDLIBS_DIR) \
 	-o $@
