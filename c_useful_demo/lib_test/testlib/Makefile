@@ -1,8 +1,30 @@
+TARGET_LIBS := libtest.so libtest.a
+
 .PHONY:clean
-libtest.so:test.o
-	gcc -o $@ -shared $^    #动态共享库
-test.o:test.c
-	gcc -o $@ -fPIC -c $^   #和位置没有关系
+.PHONY:share_lib
+.PHONY:static_lib
+
+all:$(TARGET_LIBS)
+	@echo build $(TARGET_LIBS) done
+
+share_lib:libtest.so
+	@echo build share_lib done
+
+static_lib:libtest.a
+	@echo build static_lib done
+
+libtest.a:test_static.o
+	ar rcs $@ $^
+
+libtest.so:test_shared.o
+	gcc -o $@ -shared $^
+
+test_static.o:test_static.c
+	gcc -o $@ -fPIC -c $^
+test_shared.o:test_shared.c
+	gcc -o $@ -fPIC -c $^
 clean:
-	rm libtest.so test.o  
+	rm $(TARGET_LIBS) *.o  
+
+
 

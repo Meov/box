@@ -2,5 +2,5 @@
 #include "test.h"
 
 void test(void){
-	printf("i am from a\n");
+	printf("i am from a shared library\n");
 }
