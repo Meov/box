@@ -1,0 +1,19 @@
+LOCAL_PATH := $(call local-dir)
+TARGET_DO_DIR := $(TARGET_APP_DO_DIR)
+include $(CLEAR_MFILE)
+LOCAL_VERSION := 1.00.00
+LOCAL_MODULE := test_static
+LOCAL_SRC_FILES := src/main.c
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/inc
+LOCAL_FLAGS := -O2 -g -Wall
+LOCAL_FLAGS += -I $(LOCAL_PATH)/inc/ 
+#LOCAL_LDFLAGS := -static 
+
+LOCAL_STATIC_LIBRARIES := libtest_static
+LOCAL_SHARED_LIBRARIES := libtest_shared
+
+#LOCAL_LDFLAGS := -Wl,-Bstatic -ltest_static -L $(TARGET_COMMON_LDLIBS_DIR)
+
+LOCAL_MODULE_PATH := $(TARGET_APP_OUT)/apps
+include $(EXECUTABLE_MFILE)
+

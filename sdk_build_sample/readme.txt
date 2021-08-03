@@ -10,7 +10,7 @@ examples build:
 
    apps using shared libs:
         reference test_shared local.Mk
-        1. using "make libtest_shared" to compile a shared lib
+        1. using "make libtest_shared" to compile a shared lib FIRST!
         2. using "make test_shared" to compile a test app using share lib
 
 <3 static libs:
@@ -19,7 +19,7 @@ examples build:
 
    apps using static libs:
         reference test_static local.Mk
-        1. using "make libtest_static" to compile a static lib
+        1. using "make libtest_static" to compile a static lib FIRST!
         2. using "make test_static" to compile a test app using static lib
 
 build your own apps:
