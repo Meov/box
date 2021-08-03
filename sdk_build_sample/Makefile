@@ -67,7 +67,7 @@ OUT_DIRS_LIST += $(TARGET_APP_OUT)
 export TARGET_APP_DO_DIR := $(APP_OUT_DIR)/obj
 OUT_DIRS_LIST += $(TARGET_APP_DO_DIR)
 
-# path of libs apps dependent on
+# path of shared libs apps dependent on
 export TARGET_COMMON_APP_LDLIBS_DIR := $(APP_OUT_DIR)/obj/libs
 OUT_DIRS_LIST += $(TARGET_COMMON_APP_LDLIBS_DIR)
 
