@@ -1,6 +1,6 @@
-#include <test_shared.h>
+#include <sharedtest.h>
 
 int main(){
-	test();
+	shared_test();
 	return 0;
 }
