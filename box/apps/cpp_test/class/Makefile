@@ -3,7 +3,7 @@ CFLAGS := -g -Wall -std=c++11
 CC := g++
 TARGET := test
 
-$(TARGET) : ./*.cxx
+$(TARGET) : ./*.cpp
 	$(CC) $(CFLAGS)  -o $@ $<
 
 clean:

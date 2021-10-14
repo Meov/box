@@ -5,7 +5,7 @@ LIBS := -lssl -lcrypto
 
 all:$(TARGET)
 
-$(TARGET) : ./*.cxx ./*.hxx
+$(TARGET) : ./*.cpp ./*.hxx
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LIBS) 
 
 clean:

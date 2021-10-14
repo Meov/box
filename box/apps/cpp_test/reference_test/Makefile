@@ -1,6 +1,6 @@
-TARGET := test
+TARGET := reference_test 
 
-$(TARGET) : test.cxx
+$(TARGET) : main.cpp
 	g++ -o $@ $<
 
 clean:

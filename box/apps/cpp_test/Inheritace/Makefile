@@ -6,13 +6,13 @@ TARGET := test simple main
 
 all:$(TARGET)
 
-test: test.cxx
+test: test.cpp
 	$(CC) $(CFLAGS)  -o $@ $<
 
-simple: simple.cxx
+simple: simple.cpp
 	$(CC) $(CFLAGS)  -o $@ $<
 
-main: main.cxx
+main: main.cpp
 	$(CC) $(CFLAGS)  -o $@ $<
 clean:
 	rm $(TARGET)

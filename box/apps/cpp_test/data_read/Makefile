@@ -13,7 +13,7 @@ OBJ = main.o data.o
 $(TARGET): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LIBS)
 
-%.o: %.cxx $(DEPS)
+%.o: %.cpp $(DEPS)
 	$(CC) $(CXXFLAGS)  -c $< -o $@ $(LIBS)
  
 clean:

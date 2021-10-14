@@ -126,7 +126,9 @@ $(foreach mk, $(subdir_makefiles), $(info including $(mk) ...)$($(eval -include 
 #Makefile will find all the $(APP_MODULES) defined in app/app.Mk to build it is the way this Makefile working
 .PHONY :app app.clean app.install
 app:$(APP_MODULES)
-	$(call color_echo,32,40,"SDK building $@ $(APP_MODULES) done... ")
+	$(call color_echo,32,40,"SDK building $@")
+	$(call color_echo,32,40,$(APP_MODULES))
+	$(call color_echo,32,40,"SDK building done... ")
 
 .PHONY :bsp bsp.clean bsp.install
 bsp:$(BSP_MODULES)

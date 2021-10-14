@@ -11,7 +11,7 @@ OBJ = main.o mystring.o
 $(TARGET): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $(TARGET) $(OBJ) $(LIBS)
  
-%.o: %.cxx $(DEPS)
+%.o: %.cpp $(DEPS)
 	$(CC) $(CXXFLAGS)  -c $< -o $@ $(LIBS)
  
 clean:
