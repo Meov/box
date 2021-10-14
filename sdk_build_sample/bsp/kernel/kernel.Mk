@@ -1,11 +1,14 @@
-LACAL_PATH :=$(call local-dir)
+LOCAL_PATH :=$(call local-dir)
+
+# debug use (info ...) to print things
+#$(info 1 kernel path:  $(TARGET_KERNEL_DIR))
 
 #judge wether we use this kernel
-ifeq ($(TARGET_KERNEL_DIR),$(LACAL_PATH))
+ifeq ($(TARGET_KERNEL_DIR),$(LOCAL_PATH))
 #clear all the FLAGS
 include $(CLEAR_MFILE)
 
-LOCAL_FILE := $(LACAL_PATH)/arch/arm64/boot/zImage
+LOCAL_FILE := $(LOCAL_PATH)/arch/arm64/boot/zImage
 
 TARGET_FILE := $(KERNEL_TARGET_OUT_DIR)/arch/arm64/boot/zImage
 
@@ -27,7 +30,7 @@ $(TARGET_FILE):zImage.clean kernel.config
 	$(silent) $(MAKE_CMD) zImage
 	$(silent) -rm -rf $(KERNEL_TARGET_OUT_DIR)/arch/arm64/boot/*.dtbs
 	$(silent) $(MAKE_CMD) dtbs
-#	$(silent) cp -prf $(LACAL_PATH)/arch/arm64/boot/*.dtbs $(KERNEL_TARGET_OUT_DIR)
+#	$(silent) cp -prf $(LOCAL_PATH)/arch/arm64/boot/*.dtbs $(KERNEL_TARGET_OUT_DIR)
 
 
 .PHONY: zImage.clean
@@ -39,7 +42,7 @@ zImage.clean:
 .PHONY : kernel.config
 kernel.config : $(TARGET_KERNEL_CONFIG)/.config
 #make defconfig
-$(TARGET_KERNEL_CONFIG)/.config:$(LACAL_PATH)/arch/arm64/configs/$(TARGET_KERNEL_CONFIG)
+$(TARGET_KERNEL_CONFIG)/.config:$(LOCAL_PATH)/arch/arm64/configs/$(TARGET_KERNEL_CONFIG)
 	$(silent) echo "Configure kernel with $(TARGET_KERNEL_CONFIG)..."
 	$(silent) $(MAKE_CMD) $(TARGET_KERNEL_CONFIG)
 
@@ -65,7 +68,7 @@ kernel.menuconfig:
 .PHONY:dtbs
 dtbs:
 	@echo "make dtbs..."
-	$(silent) -rm -rf $(KERNEL_TARGET_OUT_DIR)/arch/arm/boot/*.dtbs
+	$(silent) -rm -rf $(KERNEL_TARGET_OUT_DIR)/arch/arm64/boot/*.dtbs
 	$(silent) $(MAKE_CMD) dtbs
-	#$(silent) cp -prf $(LACAL_PATH)/arch/arm/boot/*.dtbs $(KERNEL_TARGET_OUT_DIR)
+	#$(silent) cp -prf $(LOCAL_PATH)/arch/arm64/boot/*.dtbs $(KERNEL_TARGET_OUT_DIR)
 endif

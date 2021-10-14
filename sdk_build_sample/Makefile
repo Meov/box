@@ -101,7 +101,10 @@ else
 	TARGET_COMMON_LDLIBS_DIR := $(TARGET_COMMON_APP_LDLIBS_DIR)
 endif
 
-#defined in bep.Mk
+# create target out dirs
+$(foreach DIR, $(OUT_DIRS_LIST), $(shell mkdir -p $(DIR)))
+
+#defined in bsp.Mk
 export BSP_MODULES :=
 
 #defined in app.Mk
@@ -112,21 +115,31 @@ $(info Buding target $(TARGET))
 include $(MFILES_DIR)/build_config.MK
 include $(MFILES_DIR)/define.MK
 
-# create target out dirs
-$(foreach DIR, $(OUT_DIRS_LIST), $(shell mkdir -p $(DIR)))
+APP_MODULES := $(sort $(APP_MODULES))
+BSP_MODULES := $(sort $(BSP_MODULES))
 
 # include all the .Mk files in subdirs
-subdir_makefiles := $(shell find $(TOP_DIR)/ -name "*.Mk" 2>/dev/null)
+subdir_makefiles := $(shell find $(TOP_DIR)/ -name "*.Mk" | sort  2>/dev/null)
 $(foreach mk, $(subdir_makefiles), $(info including $(mk) ...)$($(eval -include $(mk))))
-
-APP_MODULES := $(sort $(APP_MODULES))
-
 
 #most importent command 
 #Makefile will find all the $(APP_MODULES) defined in app/app.Mk to build it is the way this Makefile working
 .PHONY :app app.clean app.install
 app:$(APP_MODULES)
 	$(call color_echo,32,40,"SDK building $@ $(APP_MODULES) done... ")
+
+.PHONY :bsp bsp.clean bsp.install
+bsp:$(BSP_MODULES)
+	@echo $(TARGET_KERNEL_DIR)
+	@echo SDK version : $(BSP_MODULES)
+	$(call color_echo,32,40,"SDK building $@ $(BSP_MODULES) done... ")
+
+all_test:
+	@echo $(CROSS_COMPILE)
+	@echo $(OS_TYPE)
+	@echo $(OUT_DIRS_LIST)
+	@echo BSP_MOHULES : $(BSP_MODULES)
+	@echo $(TARGET_KERNEL_DIR)
 
 .PHONY :clean
 .PHONY :distclean
