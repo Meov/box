@@ -8,6 +8,8 @@ export APP_MODULES += find_duplicated_num
 export APP_MODULES += insert_sort 
 export APP_MODULES += ipstr_2_ipint
 export APP_MODULES += ipstr_2_ipint
+export APP_MODULES += raw_socket_test
+export APP_MODULES += raw_socket_test_ipdump
 
 #c++
 export APP_MODULES += class
