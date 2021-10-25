@@ -1,8 +1,8 @@
 #include <iostream>
- 
 using namespace std;
 
 
+#if 0 
 void swapr(int &a, int& b){
 	int temp;
 	temp = b;
@@ -37,13 +37,28 @@ int main ()
    int a = 3;
    int b = 4;
 
-
+#if 0
    cout << "a: "<< a << endl;
    cout << "b: "<< b << endl;
    swapr(a,b);
    cout << "a: "<< a << endl;
    cout << "b: "<< b << endl;
-
+#endif
 
    return 0;
 }
+#endif
+
+
+
+int main(){
+	int i = 0;
+	int &r = i;
+	int *p = &i;
+	r = 4;
+    *p = 5;
+	cout << "addr of r: " << &r << " addr of i: " << &i << endl;
+	cout << "addr of p: " << &p << " addr of i: " << &i << endl;
+	return 0;
+}
+
