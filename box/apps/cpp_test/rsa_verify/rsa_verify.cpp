@@ -5,7 +5,7 @@
 #include <cstdio>
 
 #define BUFFER_SIZE 512
-const char hn[] = "SHA256";
+const char hn[] = "SHA1";
 
 RsaVerify::RsaVerify()
 {
@@ -70,7 +70,7 @@ int RsaVerify::verify_it(const unsigned char *msg, size_t mlen, const unsigned c
             break; /* failed */
         }
 
-        const EVP_MD *md = EVP_get_digestbyname("SHA256");
+        const EVP_MD *md = EVP_get_digestbyname("SHA1");
         if (md == NULL)
         {
             printf("EVP_get_digestbyname failed, error 0x%lx\n", ERR_get_error());

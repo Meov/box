@@ -2,7 +2,7 @@ LOCAL_PATH := $(call local-dir)
 TARGET_DO_DIR := $(TARGET_APP_DO_DIR)
 LOCAL_VERSION := 1.00.00
 include $(CLEAR_MFILE)
-LOCAL_MODULE := rsa_verify
+LOCAL_MODULE := verify_it
 LOCAL_SRC_FILES := rsa_verify.cpp  main.cpp
 LOCAL_MODULE_PATH := $(TARGET_APP_OUT)/apps/rsa_verify
 LOCAL_LDLIBS := -lpthread -lssl -lcrypto
