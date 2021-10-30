@@ -5,6 +5,7 @@ include $(CLEAR_MFILE)
 LOCAL_MODULE := data_read
 LOCAL_SRC_FILES := data.cpp main.cpp
 LOCAL_MODULE_PATH := $(TARGET_APP_OUT)/apps
+LOCAL_FLAGS := -O2 -g -Wall -std=c++11
 
 include $(EXECUTABLE_MFILE)
 LOCAL_DEPEND_MODULES := data_read
