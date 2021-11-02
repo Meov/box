@@ -26,16 +26,16 @@ int Motor::CAN_RoboModule_DRV_Reset(unsigned char Group,unsigned char Number, Ca
 		return -1;
 	}
 
-	tx_message.StdId = can_id;     
+	tx_message.stdid = can_id;     
 
-	tx_message.Data[0] = 0x55;
-	tx_message.Data[1] = 0x55;
-	tx_message.Data[2] = 0x55;
-	tx_message.Data[3] = 0x55;
-	tx_message.Data[4] = 0x55;
-	tx_message.Data[5] = 0x55;
-	tx_message.Data[6] = 0x55;
-	tx_message.Data[7] = 0x55;
+	tx_message.data[0] = 0x55;
+	tx_message.data[1] = 0x55;
+	tx_message.data[2] = 0x55;
+	tx_message.data[3] = 0x55;
+	tx_message.data[4] = 0x55;
+	tx_message.data[5] = 0x55;
+	tx_message.data[6] = 0x55;
+	tx_message.data[7] = 0x55;
 
 	return 0;
 }
@@ -65,16 +65,16 @@ int Motor::CAN_RoboModule_DRV_Mode_Choice(unsigned char Group,unsigned char Numb
 		return -1;;
 	}
 
-	tx_message.StdId = can_id;
+	tx_message.stdid = can_id;
 
-	tx_message.Data[0] = Mode;
-	tx_message.Data[1] = 0x55;
-	tx_message.Data[2] = 0x55;
-	tx_message.Data[3] = 0x55;
-	tx_message.Data[4] = 0x55;
-	tx_message.Data[5] = 0x55;
-	tx_message.Data[6] = 0x55;
-	tx_message.Data[7] = 0x55;
+	tx_message.data[0] = Mode;
+	tx_message.data[1] = 0x55;
+	tx_message.data[2] = 0x55;
+	tx_message.data[3] = 0x55;
+	tx_message.data[4] = 0x55;
+	tx_message.data[5] = 0x55;
+	tx_message.data[6] = 0x55;
+	tx_message.data[7] = 0x55;
 
 	can_tx_success_flag = 0;
 	return 0;
@@ -106,7 +106,7 @@ int Motor::CAN_RoboModule_DRV_OpenLoop_Mode(unsigned char Group,unsigned char Nu
 		return -1;
 	}
 
-	tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+	tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
 
 	if(Temp_PWM > 5000)
 	{
@@ -117,14 +117,14 @@ int Motor::CAN_RoboModule_DRV_OpenLoop_Mode(unsigned char Group,unsigned char Nu
 		Temp_PWM = -5000;
 	}
 
-	tx_message.Data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
-	tx_message.Data[1] = (unsigned char)(Temp_PWM&0xff);
-	tx_message.Data[2] = 0x55;
-	tx_message.Data[3] = 0x55;
-	tx_message.Data[4] = 0x55;
-	tx_message.Data[5] = 0x55;
-	tx_message.Data[6] = 0x55;
-	tx_message.Data[7] = 0x55;
+	tx_message.data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
+	tx_message.data[1] = (unsigned char)(Temp_PWM&0xff);
+	tx_message.data[2] = 0x55;
+	tx_message.data[3] = 0x55;
+	tx_message.data[4] = 0x55;
+	tx_message.data[5] = 0x55;
+	tx_message.data[6] = 0x55;
+	tx_message.data[7] = 0x55;
 
 	can_tx_success_flag = 0;
 
@@ -160,7 +160,7 @@ int Motor:: CAN_RoboModule_DRV_Current_Mode(unsigned char Group,unsigned char Nu
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
 
     if(Temp_PWM > 5000)
     {
@@ -176,14 +176,14 @@ int Motor:: CAN_RoboModule_DRV_Current_Mode(unsigned char Group,unsigned char Nu
         Temp_PWM = abs(Temp_PWM);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_PWM&0xff);
-    tx_message.Data[2] = (unsigned char)((Temp_Current>>8)&0xff);
-    tx_message.Data[3] = (unsigned char)(Temp_Current&0xff);
-    tx_message.Data[4] = 0x55;
-    tx_message.Data[5] = 0x55;
-    tx_message.Data[6] = 0x55;
-    tx_message.Data[7] = 0x55;
+    tx_message.data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_PWM&0xff);
+    tx_message.data[2] = (unsigned char)((Temp_Current>>8)&0xff);
+    tx_message.data[3] = (unsigned char)(Temp_Current&0xff);
+    tx_message.data[4] = 0x55;
+    tx_message.data[5] = 0x55;
+    tx_message.data[6] = 0x55;
+    tx_message.data[7] = 0x55;
 
 	return 0;
 
@@ -219,7 +219,7 @@ int Motor::CAN_RoboModule_DRV_Velocity_Mode(unsigned char Group,unsigned char Nu
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
 
     if(Temp_PWM > 5000)
     {
@@ -235,14 +235,14 @@ int Motor::CAN_RoboModule_DRV_Velocity_Mode(unsigned char Group,unsigned char Nu
         Temp_PWM = abs(Temp_PWM);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_PWM&0xff);
-    tx_message.Data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
-    tx_message.Data[3] = (unsigned char)(Temp_Velocity&0xff);
-    tx_message.Data[4] = 0x55;
-    tx_message.Data[5] = 0x55;
-    tx_message.Data[6] = 0x55;
-    tx_message.Data[7] = 0x55;
+    tx_message.data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_PWM&0xff);
+    tx_message.data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
+    tx_message.data[3] = (unsigned char)(Temp_Velocity&0xff);
+    tx_message.data[4] = 0x55;
+    tx_message.data[5] = 0x55;
+    tx_message.data[6] = 0x55;
+    tx_message.data[7] = 0x55;
     
 	
 	return 0;
@@ -278,7 +278,7 @@ int CAN_RoboModule_DRV_Position_Mode(unsigned char Group,unsigned char Number,sh
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
 
     if(Temp_PWM > 5000)
     {
@@ -294,14 +294,14 @@ int CAN_RoboModule_DRV_Position_Mode(unsigned char Group,unsigned char Number,sh
         Temp_PWM = abs(Temp_PWM);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_PWM&0xff);
-    tx_message.Data[2] = 0x55;
-    tx_message.Data[3] = 0x55;
-    tx_message.Data[4] = (unsigned char)((Temp_Position>>24)&0xff);
-    tx_message.Data[5] = (unsigned char)((Temp_Position>>16)&0xff);
-    tx_message.Data[6] = (unsigned char)((Temp_Position>>8)&0xff);
-    tx_message.Data[7] = (unsigned char)(Temp_Position&0xff);
+    tx_message.data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_PWM&0xff);
+    tx_message.data[2] = 0x55;
+    tx_message.data[3] = 0x55;
+    tx_message.data[4] = (unsigned char)((Temp_Position>>24)&0xff);
+    tx_message.data[5] = (unsigned char)((Temp_Position>>16)&0xff);
+    tx_message.data[6] = (unsigned char)((Temp_Position>>8)&0xff);
+    tx_message.data[7] = (unsigned char)(Temp_Position&0xff);
     
   	return 0;
 		
@@ -337,7 +337,7 @@ int Motor:: CAN_RoboModule_DRV_Velocity_Position_Mode(unsigned char Group,unsign
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
 
     if(Temp_PWM > 5000)
     {
@@ -358,14 +358,14 @@ int Motor:: CAN_RoboModule_DRV_Velocity_Position_Mode(unsigned char Group,unsign
         Temp_Velocity = abs(Temp_Velocity);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_PWM&0xff);
-    tx_message.Data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
-    tx_message.Data[3] = (unsigned char)(Temp_Velocity&0xff);
-    tx_message.Data[4] = (unsigned char)((Temp_Position>>24)&0xff);
-    tx_message.Data[5] = (unsigned char)((Temp_Position>>16)&0xff);
-    tx_message.Data[6] = (unsigned char)((Temp_Position>>8)&0xff);
-    tx_message.Data[7] = (unsigned char)(Temp_Position&0xff);
+    tx_message.data[0] = (unsigned char)((Temp_PWM>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_PWM&0xff);
+    tx_message.data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
+    tx_message.data[3] = (unsigned char)(Temp_Velocity&0xff);
+    tx_message.data[4] = (unsigned char)((Temp_Position>>24)&0xff);
+    tx_message.data[5] = (unsigned char)((Temp_Position>>16)&0xff);
+    tx_message.data[6] = (unsigned char)((Temp_Position>>8)&0xff);
+    tx_message.data[7] = (unsigned char)(Temp_Position&0xff);
     
   	return 0;
 		
@@ -400,21 +400,21 @@ int Motor::CAN_RoboModule_DRV_Current_Velocity_Mode(unsigned char Group,unsigned
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
     
     if(Temp_Current < 0)
     {
         Temp_Current = abs(Temp_Current);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_Current>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_Current&0xff);
-    tx_message.Data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
-    tx_message.Data[3] = (unsigned char)(Temp_Velocity&0xff);
-    tx_message.Data[4] = 0x55;
-    tx_message.Data[5] = 0x55;
-    tx_message.Data[6] = 0x55;
-    tx_message.Data[7] = 0x55;
+    tx_message.data[0] = (unsigned char)((Temp_Current>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_Current&0xff);
+    tx_message.data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
+    tx_message.data[3] = (unsigned char)(Temp_Velocity&0xff);
+    tx_message.data[4] = 0x55;
+    tx_message.data[5] = 0x55;
+    tx_message.data[6] = 0x55;
+    tx_message.data[7] = 0x55;
     
     return 0;
 }
@@ -447,7 +447,7 @@ int Motor::CAN_RoboModule_DRV_Current_Position_Mode(unsigned char Group,unsigned
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
 
     
     if(Temp_Current < 0)
@@ -455,14 +455,14 @@ int Motor::CAN_RoboModule_DRV_Current_Position_Mode(unsigned char Group,unsigned
         Temp_Current = abs(Temp_Current);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_Current>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_Current&0xff);
-    tx_message.Data[2] = 0x55;
-    tx_message.Data[3] = 0x55;
-    tx_message.Data[4] = (unsigned char)((Temp_Position>>24)&0xff);
-    tx_message.Data[5] = (unsigned char)((Temp_Position>>16)&0xff);
-    tx_message.Data[6] = (unsigned char)((Temp_Position>>8)&0xff);
-    tx_message.Data[7] = (unsigned char)(Temp_Position&0xff);
+    tx_message.data[0] = (unsigned char)((Temp_Current>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_Current&0xff);
+    tx_message.data[2] = 0x55;
+    tx_message.data[3] = 0x55;
+    tx_message.data[4] = (unsigned char)((Temp_Position>>24)&0xff);
+    tx_message.data[5] = (unsigned char)((Temp_Position>>16)&0xff);
+    tx_message.data[6] = (unsigned char)((Temp_Position>>8)&0xff);
+    tx_message.data[7] = (unsigned char)(Temp_Position&0xff);
     
 	return 0;
 }
@@ -500,7 +500,7 @@ int Motor::CAN_RoboModule_DRV_Current_Velocity_Position_Mode(unsigned char Group
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
     
     if(Temp_Current < 0)
     {
@@ -512,14 +512,14 @@ int Motor::CAN_RoboModule_DRV_Current_Velocity_Position_Mode(unsigned char Group
         Temp_Velocity = abs(Temp_Velocity);
     }
     
-    tx_message.Data[0] = (unsigned char)((Temp_Current>>8)&0xff);
-    tx_message.Data[1] = (unsigned char)(Temp_Current&0xff);
-    tx_message.Data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
-    tx_message.Data[3] = (unsigned char)(Temp_Velocity&0xff);
-    tx_message.Data[4] = (unsigned char)((Temp_Position>>24)&0xff);
-    tx_message.Data[5] = (unsigned char)((Temp_Position>>16)&0xff);
-    tx_message.Data[6] = (unsigned char)((Temp_Position>>8)&0xff);
-    tx_message.Data[7] = (unsigned char)(Temp_Position&0xff);
+    tx_message.data[0] = (unsigned char)((Temp_Current>>8)&0xff);
+    tx_message.data[1] = (unsigned char)(Temp_Current&0xff);
+    tx_message.data[2] = (unsigned char)((Temp_Velocity>>8)&0xff);
+    tx_message.data[3] = (unsigned char)(Temp_Velocity&0xff);
+    tx_message.data[4] = (unsigned char)((Temp_Position>>24)&0xff);
+    tx_message.data[5] = (unsigned char)((Temp_Position>>16)&0xff);
+    tx_message.data[6] = (unsigned char)((Temp_Position>>8)&0xff);
+    tx_message.data[7] = (unsigned char)(Temp_Position&0xff);
     
     return 0;
 }
@@ -544,16 +544,16 @@ int Motor::CAN_RoboModule_DRV_Config(unsigned char Group,unsigned char Number,un
         return -1;
     }
     
-    tx_message.StdId = can_id;
+    tx_message.stdid = can_id;
     
-    tx_message.Data[0] = Temp_Time1;
-    tx_message.Data[1] = Temp_Time2;
-    tx_message.Data[2] = 0x55;
-    tx_message.Data[3] = 0x55;
-    tx_message.Data[4] = 0x55;
-    tx_message.Data[5] = 0x55;
-    tx_message.Data[6] = 0x55;
-    tx_message.Data[7] = 0x55;
+    tx_message.data[0] = Temp_Time1;
+    tx_message.data[1] = Temp_Time2;
+    tx_message.data[2] = 0x55;
+    tx_message.data[3] = 0x55;
+    tx_message.data[4] = 0x55;
+    tx_message.data[5] = 0x55;
+    tx_message.data[6] = 0x55;
+    tx_message.data[7] = 0x55;
     
     return 0;
    
@@ -577,16 +577,16 @@ int Motor::CAN_RoboModule_DRV_Online_Check(unsigned char Group,unsigned char Num
         return -1;
     }
     
-    tx_message.StdId = can_id;      //帧ID为传入参数的CAN_ID
+    tx_message.stdid = can_id;      //帧ID为传入参数的CAN_ID
     
-    tx_message.Data[0] = 0x55;
-    tx_message.Data[1] = 0x55;
-    tx_message.Data[2] = 0x55;
-    tx_message.Data[3] = 0x55;
-    tx_message.Data[4] = 0x55;
-    tx_message.Data[5] = 0x55;
-    tx_message.Data[6] = 0x55;
-    tx_message.Data[7] = 0x55;
+    tx_message.data[0] = 0x55;
+    tx_message.data[1] = 0x55;
+    tx_message.data[2] = 0x55;
+    tx_message.data[3] = 0x55;
+    tx_message.data[4] = 0x55;
+    tx_message.data[5] = 0x55;
+    tx_message.data[6] = 0x55;
+    tx_message.data[7] = 0x55;
     
     return 0;
    
@@ -616,65 +616,65 @@ int Motor::C CAN1_RX0_IRQHandler(void)
         CAN_Receive(&rx_message);//获取can 数据
         if((rx_message.IDE == CAN_ID_STD)&&(rx_message.IDE == CAN_RTR_DATA)&&(rx_message.DLC == 8)) //标准帧、数据帧、数据长度为8
         {
-            if(rx_message.StdId == 0x1B)
+            if(rx_message.stdid == 0x1B)
             {
-                Real_Current_Value[0] = (rx_message.Data[0]<<8)|(rx_message.Data[1]);
-                Real_Velocity_Value[0] = (rx_message.Data[2]<<8)|(rx_message.Data[3]);
-                Real_Position_Value[0] = ((rx_message.Data[4]<<24)|(rx_message.Data[5]<<16)|(rx_message.Data[6]<<8)|(rx_message.Data[7]));
+                Real_Current_Value[0] = (rx_message.data[0]<<8)|(rx_message.data[1]);
+                Real_Velocity_Value[0] = (rx_message.data[2]<<8)|(rx_message.data[3]);
+                Real_Position_Value[0] = ((rx_message.data[4]<<24)|(rx_message.data[5]<<16)|(rx_message.data[6]<<8)|(rx_message.data[7]));
             }
-            else if(rx_message.StdId == 0x2B)
+            else if(rx_message.stdid == 0x2B)
             {
-                Real_Current_Value[1] = (rx_message.Data[0]<<8)|(rx_message.Data[1]);
-                Real_Velocity_Value[1] = (rx_message.Data[2]<<8)|(rx_message.Data[3]);
-                Real_Position_Value[1] = ((rx_message.Data[4]<<24)|(rx_message.Data[5]<<16)|(rx_message.Data[6]<<8)|(rx_message.Data[7]));
+                Real_Current_Value[1] = (rx_message.data[0]<<8)|(rx_message.data[1]);
+                Real_Velocity_Value[1] = (rx_message.data[2]<<8)|(rx_message.data[3]);
+                Real_Position_Value[1] = ((rx_message.data[4]<<24)|(rx_message.data[5]<<16)|(rx_message.data[6]<<8)|(rx_message.data[7]));
             }
-            else if(rx_message.StdId == 0x3B)
+            else if(rx_message.stdid == 0x3B)
             {
-                Real_Current_Value[2] = (rx_message.Data[0]<<8)|(rx_message.Data[1]);
-                Real_Velocity_Value[2] = (rx_message.Data[2]<<8)|(rx_message.Data[3]);
-                Real_Position_Value[2] = ((rx_message.Data[4]<<24)|(rx_message.Data[5]<<16)|(rx_message.Data[6]<<8)|(rx_message.Data[7]));
+                Real_Current_Value[2] = (rx_message.data[0]<<8)|(rx_message.data[1]);
+                Real_Velocity_Value[2] = (rx_message.data[2]<<8)|(rx_message.data[3]);
+                Real_Position_Value[2] = ((rx_message.data[4]<<24)|(rx_message.data[5]<<16)|(rx_message.data[6]<<8)|(rx_message.data[7]));
             }
-            else if(rx_message.StdId == 0x4B)
+            else if(rx_message.stdid == 0x4B)
             {
-                Real_Current_Value[3] = (rx_message.Data[0]<<8)|(rx_message.Data[1]);
-                Real_Velocity_Value[3] = (rx_message.Data[2]<<8)|(rx_message.Data[3]);
-                Real_Position_Value[3] = ((rx_message.Data[4]<<24)|(rx_message.Data[5]<<16)|(rx_message.Data[6]<<8)|(rx_message.Data[7]));
+                Real_Current_Value[3] = (rx_message.data[0]<<8)|(rx_message.data[1]);
+                Real_Velocity_Value[3] = (rx_message.data[2]<<8)|(rx_message.data[3]);
+                Real_Position_Value[3] = ((rx_message.data[4]<<24)|(rx_message.data[5]<<16)|(rx_message.data[6]<<8)|(rx_message.data[7]));
             }
-            else if(rx_message.StdId == 0x1F)
+            else if(rx_message.stdid == 0x1F)
             {
                 Real_Online[0] = 1;
             }
-            else if(rx_message.StdId == 0x2F)
+            else if(rx_message.stdid == 0x2F)
             {
                 Real_Online[1] = 1;
             }
-            else if(rx_message.StdId == 0x3F)
+            else if(rx_message.stdid == 0x3F)
             {
                 Real_Online[2] = 1;
             }
-            else if(rx_message.StdId == 0x4F)
+            else if(rx_message.stdid == 0x4F)
             {
                 Real_Online[3] = 1;
             }
-            else if(rx_message.StdId == 0x1C)
+            else if(rx_message.stdid == 0x1C)
             {
-                Real_Ctl1_Value[0] = rx_message.Data[0];
-                Real_Ctl2_Value[0] = rx_message.Data[1];
+                Real_Ctl1_Value[0] = rx_message.data[0];
+                Real_Ctl2_Value[0] = rx_message.data[1];
             }
-            else if(rx_message.StdId == 0x2C)
+            else if(rx_message.stdid == 0x2C)
             {
-                Real_Ctl1_Value[1] = rx_message.Data[0];
-                Real_Ctl2_Value[1] = rx_message.Data[1];
+                Real_Ctl1_Value[1] = rx_message.data[0];
+                Real_Ctl2_Value[1] = rx_message.data[1];
             }
-            else if(rx_message.StdId == 0x3C)
+            else if(rx_message.stdid == 0x3C)
             {
-                Real_Ctl1_Value[2] = rx_message.Data[0];
-                Real_Ctl2_Value[2] = rx_message.Data[1];
+                Real_Ctl1_Value[2] = rx_message.data[0];
+                Real_Ctl2_Value[2] = rx_message.data[1];
             }
-            else if(rx_message.StdId == 0x4C)
+            else if(rx_message.stdid == 0x4C)
             {
-                Real_Ctl1_Value[3] = rx_message.Data[0];
-                Real_Ctl2_Value[3] = rx_message.Data[1];
+                Real_Ctl1_Value[3] = rx_message.data[0];
+                Real_Ctl2_Value[3] = rx_message.data[1];
             }
         }
                 

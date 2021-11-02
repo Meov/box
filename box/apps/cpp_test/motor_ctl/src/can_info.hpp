@@ -7,8 +7,8 @@ class CanMsg_info {
 		CanMsg_info();
 		~CanMsg_info();
 
-		unsigned short StdId;
-		unsigned char Data[8];
+		unsigned short stdid;
+		unsigned char data[8];
 };
 
 #endif
