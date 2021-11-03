@@ -38,10 +38,7 @@ export APP_MODULES += hello_world
 #c++项目
 export APP_MODULES += rsa_verify
 
-
 在该文件添加之后，方可在box/box中使用: make "your app module name" 进行编译。
-
-
 
 
 对于box/box/bsp下新添加的文件，注意将新增的模块加进bsp.Mk
@@ -58,3 +55,4 @@ export TARGET_UBOOT_CONFIG := p2371-2180_defconfig
 export BSP_MODULES += kernel
 export BSP_MODULES += uboot
 #endif
+在该文件添加之后，方可在box/box中使用: make kernel / make uboot /make rootfs 分别进行编译。
