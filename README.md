@@ -32,29 +32,29 @@ kernel\rootfs\uboot 仿照 box/box/bsp下的进行添加；
 
 对于box/box/apps下新添加的文件，注意将新增的模块加进app.Mk
 这是目前已有的：
-#c
-export APP_MODULES += hello_world
-export APP_MODULES += libtest_shared
-export APP_MODULES += libtest_static
-export APP_MODULES += test_shared
-export APP_MODULES += test_static
-export APP_MODULES += link_reversely
-export APP_MODULES += find_duplicated_num
-export APP_MODULES += insert_sort
-export APP_MODULES += ipstr_2_ipint
-export APP_MODULES += ipstr_2_ipint
-export APP_MODULES += raw_socket_test
-export APP_MODULES += raw_socket_test_ipdump
 
-#c++
-export APP_MODULES += class
-export APP_MODULES += data_read
-export APP_MODULES += Inheritace_main
-export APP_MODULES += Inheritace_simple
-export APP_MODULES += reference_test
-export APP_MODULES += string_sample_cpp
-export APP_MODULES += map_test
+#c项目
+export APP_MODULES += hello_world
+#c++项目
 export APP_MODULES += rsa_verify
-export APP_MODULES += motor_ctr
+
 
 在该文件添加之后，方可在box/box中使用: make "your app module name" 进行编译。
+
+
+
+
+对于box/box/bsp下新添加的文件，注意将新增的模块加进bsp.Mk
+这是目前已有的：
+#kernel config and path
+#use TARGET_KERNEL_DIR to decide the target kernel to build
+#ifeq ($(PLATFORM),ARM64)
+export TARGET_KERNEL_DIR := $(TOP_DIR)/bsp/kernel
+export TARGET_KERNEL_CONFIG := tegra_defconfig
+#uboot config and path
+export TARGET_UBOOT_DIR := $(TOP_DIR)/bsp/uboot
+export TARGET_UBOOT_CONFIG := p2371-2180_defconfig
+
+export BSP_MODULES += kernel
+export BSP_MODULES += uboot
+#endif
