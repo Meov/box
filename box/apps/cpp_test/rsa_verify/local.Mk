@@ -2,11 +2,11 @@ LOCAL_PATH := $(call local-dir)
 TARGET_DO_DIR := $(TARGET_APP_DO_DIR)
 LOCAL_VERSION := 1.00.00
 include $(CLEAR_MFILE)
-LOCAL_MODULE := verify_it
+LOCAL_MODULE := rsa_verify
 LOCAL_SRC_FILES := rsa_verify.cpp  main.cpp
 LOCAL_MODULE_PATH := $(TARGET_APP_OUT)/apps/rsa_verify
 LOCAL_LDLIBS := -lpthread -lssl -lcrypto
 
 include $(EXECUTABLE_MFILE)
-LOCAL_DEPEND_MODULES := reference_test
+LOCAL_DEPEND_MODULES := rsa_verify
 #include $(BUILDING2PREBUILT_MFILE)
