@@ -9,21 +9,27 @@
 #include <linux/can/raw.h>
 #include <can_info.hpp>
 #include <singleton.hpp>
+#include <thread.hpp>
 
-class Can_trans : public Singleton<Can_trans>{
-
+class Can_trans : public Singleton<Can_trans>,
+				  public Thread{
 	public:
-		int send(CanMsg_info& can_msg);
-		int recv(CanMsg_info& can_msg);
-		int init(std::string can_name);
+		int send(const CanMsg_info& can_msg);
+		int init(const std::string can_name);
+		void service(void);
 
 	private:
 		friend class Singleton<Can_trans>;	 
 		Can_trans();
 		~Can_trans();
+		int recv(CanMsg_info& can_msg);
+		int open(const std::string can_name);
+		static void can_recv_cb(void *data);
+		void can_recv_impl(void);
 
 		std::string _can_interface_name;
-		int _socket_can;
+		int _socket_can_fd;
+		int _epoll_can_fd;
 		struct ifreq _ifr;
 		struct can_frame _frame;
 		struct can_filter _rfilter[1];

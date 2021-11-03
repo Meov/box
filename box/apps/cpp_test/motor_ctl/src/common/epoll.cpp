@@ -3,6 +3,7 @@
 #include <sys/epoll.h>
 #include <assert.h>
 #include "epoll.hpp"
+#include <iostream>
 
 Epoll::Epoll() : _epoll_fd(-1) {
 }
@@ -13,7 +14,6 @@ Epoll::~Epoll() {
 
 int Epoll::init() {
     assert(_epoll_fd == -1);
-
     _epoll_fd = epoll_create1(0);
     if (_epoll_fd == -1) {
         printf("epoll create fail\n");
