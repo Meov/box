@@ -16,7 +16,7 @@ int Epoll::init() {
     assert(_epoll_fd == -1);
     _epoll_fd = epoll_create1(0);
     if (_epoll_fd == -1) {
-        printf("epoll create fail\n");
+        perror("epoll create fail\n");
         return 1;
     }
 
@@ -42,6 +42,7 @@ void Epoll::service() {
 
     epoll_event event[MAX_EVENT_NUM];
     std::map<int, CallBackInfo>::const_iterator it;
+    std::cout << "epoll service begin" << std::endl;
     while(!_exit) {
         int num = epoll_wait(_epoll_fd, event, MAX_EVENT_NUM, 3*1000);
         for (int i = 0; i < num; ++i) {
@@ -53,6 +54,7 @@ void Epoll::service() {
             }
         }
     }
+    std::cout << "epoll service end" << std::endl;
 }
 
 int Epoll::epoll_add(int fd, void (*cb)(void *), void *data) {
@@ -61,7 +63,6 @@ int Epoll::epoll_add(int fd, void (*cb)(void *), void *data) {
     epoll_event event;
     event.events = EPOLLIN | EPOLLET;
     event.data.fd = fd;
-
     int result = epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, fd, &event); 
     if (result == -1) {
         printf("Epoll add object %d fail\n", fd);

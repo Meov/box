@@ -1,7 +1,6 @@
 #CC = g++
 CC := arm-linux-gnueabihf-g++
-CXXFLAGS += -std=c++11 -g -Wall -Wextra -Werror  \
-            #-Wno-error=unused-parameter \
+CXXFLAGS += -std=c++11 -g -Wall -Wextra -Werror -Wno-error=unused-parameter -Wno-error=unused-variable
             #-fsanitize=address -fno-omit-frame-pointer
 LIBS += -lpthread
 TARGET := motor

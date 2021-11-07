@@ -13,7 +13,10 @@ Can_trans::Can_trans():
 }
 
 Can_trans::~Can_trans(){
-    close(_socket_can_fd);
+    std::cout << "~Can_trans close: " << _socket_can_fd << std::endl;
+    if(_socket_can_fd > 0){
+        close(_socket_can_fd);
+    }
 }
 
 int Can_trans::open(std::string can_name){
@@ -42,8 +45,10 @@ int Can_trans::open(std::string can_name){
     }
 
     /* set filter for only receiving packet with can id 0x1F */
-    _rfilter[0].can_id = 0x00;
+    _rfilter[0].can_id = 0x01B;
     _rfilter[0].can_mask = CAN_SFF_MASK;
+    _rfilter[1].can_id = 0x01C;
+    _rfilter[1].can_mask = CAN_SFF_MASK;
     if(setsockopt(_socket_can_fd, SOL_CAN_RAW, CAN_RAW_FILTER, &_rfilter, sizeof(_rfilter)) < 0)
     {
         std::cout << "set receiving filter error." << std::endl;
@@ -65,6 +70,7 @@ int Can_trans::init(const std::string can_name){
 
 #ifndef THREAD_RECV
     /*add can recv to epoll*/
+    std::cout << "add can_recv_cb to epoll"<<std::endl;
     Epoll::get_instance()->epoll_add(_socket_can_fd, can_recv_cb, this);
 #endif
     return 0;
@@ -78,17 +84,21 @@ void Can_trans::can_recv_cb(void *data) {
 void Can_trans::can_recv_impl(){
     int nbytes = 0;
     CanMsg_info can_msg;
-    std::cout << "epoll recived something"  << std::endl;
+#if 1
     nbytes = read(_socket_can_fd, &_frame, sizeof(_frame));
     if(nbytes > 0)
     {
+        printf("ID: %#02x [%d] ",_frame.can_id,_frame.can_dlc);
         for (int i=0; i < _frame.can_dlc; i++){
             can_msg.data[i] = _frame.data[i];
-            printf("%#x ", _frame.data[i]);
+            printf("%02x ", _frame.data[i]);
         }
         printf("\n");
+    }else{
+        printf("err: %d\n",errno);
+
     }
-    std::cout << "epoll recived end"  << std::endl;
+#endif
 }
 
 int Can_trans::send(const CanMsg_info& can_msg){
@@ -100,53 +110,44 @@ int Can_trans::send(const CanMsg_info& can_msg){
     {
         _frame.data[i] = can_msg.data[i];
     }
-    printf("Sent out\n");
     /* Sending data */
     if(write(_socket_can_fd, &_frame, sizeof(_frame)) < 0)
     {
-        perror("Send failed");
-        close(_socket_can_fd);
+        perror("--Send failed");
         return 2;
     }
 
+    printf("Sent out\n");
     return 0;
 }
 
 int Can_trans::recv(CanMsg_info& can_msg){
+#if 1
     int nbytes = 0;
 
-    /* set filter for only receiving packet with can id 0x1F */
-    _rfilter[0].can_id = 0x00;
-    _rfilter[0].can_mask = CAN_SFF_MASK;
-
-    if(setsockopt(_socket_can_fd, SOL_CAN_RAW, CAN_RAW_FILTER, &_rfilter, sizeof(_rfilter)) < 0)
-    {
-        std::cout << "set receiving filter error." << std::endl;
-        close(_socket_can_fd);
-        return 3;
-    }
+    std::cout << "Thread:ready to recive data..." << std::endl;
     /* keep reading */
     while(!_exit){
-        std::cout << "ready to recive data..." << std::endl;
-        sleep(1);
-
         nbytes = read(_socket_can_fd, &_frame, sizeof(_frame));
+        printf("ID: %#02x [%d] ",_frame.can_id,_frame.can_dlc);
         if(nbytes > 0)
         {
             for (int i=0; i < _frame.can_dlc; i++){
                 can_msg.data[i] = _frame.data[i];
-                printf("%#x ", _frame.data[i]);
+                printf("%02x ", _frame.data[i]);
             }
             printf("\n");
         }
 
     }
-
+#endif
     return 0;
 }
 
 void Can_trans::service(void){
+#if 1
     CanMsg_info can_msg;
     std::cout << "ready to recive data using muilti thread..." << std::endl;
     recv(can_msg);
+#endif
 }

@@ -32,6 +32,6 @@ class Can_trans : public Singleton<Can_trans>,
 		int _epoll_can_fd;
 		struct ifreq _ifr;
 		struct can_frame _frame;
-		struct can_filter _rfilter[1];
+		struct can_filter _rfilter[2];
 
 };
