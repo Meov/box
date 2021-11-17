@@ -51,7 +51,7 @@ do\
 
 #define DLIST_FOR_EACH(node,head) for((node) = (head)->pNext;(node)!=head;(node)=(node)->pNext)
 #define DLIST_IS_EMPTY(head) (head == (head)->pNext)
-#define DLIST_NODE_OFFESET(type,member) ((unsigned int)(&((type *)0)->member))  //求得的地址就是member在结构体中的偏移
+#define DLIST_NODE_OFFESET(type,member) ((size_t)&((type *)0)->member)  //求得的地址就是member在结构体中的偏移量
 //删除node节点
 #define DLIST_DEL(node)\
 do\
@@ -127,7 +127,7 @@ int buffer_init(void){
 }
 
 void* buffer_alloc(unsigned int size){
-    static alloc_num = 0;
+    static int  alloc_num = 0;
     alloc_num++;
     DlistNode *dlnode = NULLPTR;
     BufNode *buffer_node_ptr = NULLPTR;
