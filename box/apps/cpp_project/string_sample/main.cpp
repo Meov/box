@@ -26,5 +26,12 @@ int main(){
 		std::cout << "str_1 == str_2" << std::endl;
 	}
 
+    Mystring str_4 = "12345";
+    std::cout << str_4.c_str() << std::endl;
+
+    str_4.append(str_2);
+    std::cout << str_4.c_str() << std::endl;
+
+
 	return 0;
 }

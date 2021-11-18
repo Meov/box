@@ -1,6 +1,6 @@
 CC = g++
-CXXFLAGS += -std=c++11 -g -Wall -Wextra -Werror  \
-            -Wno-error=unused-parameter \
+# -Werror  
+CXXFLAGS += -std=c++11 -g -Wall -Wextra -Wno-error=unused-parameter \
             -fsanitize=address -fno-omit-frame-pointer
 LIBS += -lubsan
 
