@@ -21,3 +21,4 @@ export APP_MODULES += string_sample_cpp
 export APP_MODULES += map_test 
 export APP_MODULES += rsa_verify 
 export APP_MODULES += motor_ctr 
+export APP_MODULES += new_test
