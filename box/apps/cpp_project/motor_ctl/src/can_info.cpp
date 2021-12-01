@@ -3,7 +3,6 @@
 
 CanMsg_info::CanMsg_info():
 	stdid(0)
-
 {
 	memset(data,0,sizeof(data));
 }

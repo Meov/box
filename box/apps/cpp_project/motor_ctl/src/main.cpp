@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <epoll.hpp>
 
-#define THREAD_RECV
+//#define THREAD_RECV
 
 class Manager {
 public:

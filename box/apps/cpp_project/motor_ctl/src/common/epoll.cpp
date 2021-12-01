@@ -61,7 +61,7 @@ int Epoll::epoll_add(int fd, void (*cb)(void *), void *data) {
     assert(_epoll_fd != -1);
 
     epoll_event event;
-    event.events = EPOLLIN | EPOLLET;
+    event.events = EPOLLIN;
     event.data.fd = fd;
     int result = epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, fd, &event); 
     if (result == -1) {

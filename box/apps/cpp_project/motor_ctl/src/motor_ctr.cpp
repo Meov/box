@@ -592,20 +592,13 @@ int Motor::CAN_RoboModule_DRV_Online_Check(unsigned char Group,unsigned char Num
    
 }
 
-#if 0
-short Real_Current_Value[4] = {0};
-short Real_Velocity_Value[4] = {0};
-long Real_Position_Value[4] = {0};
-char Real_Online[4] = {0};
-char Real_Ctl1_Value[4] = {0};
-char Real_Ctl2_Value[4] = {0};
-
+#if 1
 //本接收数据的函数，默认为4个驱动器，都挂在0组，编号为1、2、3、4
 /*************************************************************************
                           CAN1_RX0_IRQHandler
 描述：CAN1的接收中断函数
 *************************************************************************/
-int Motor::CAN1_RX0_IRQHandler(CanMsg_info& rx_message)
+int Motor::CAN_rx_parse(CanMsg_info& rx_message)
 {
 
         if(rx_message.stdid == 0x1B)
@@ -669,6 +662,7 @@ int Motor::CAN1_RX0_IRQHandler(CanMsg_info& rx_message)
                 Real_Ctl2_Value[3] = rx_message.data[1];
         }
 
+        return 0;
 }
 
 #endif

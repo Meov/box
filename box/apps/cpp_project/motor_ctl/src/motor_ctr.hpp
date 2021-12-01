@@ -38,11 +38,17 @@ class Motor{
 				unsigned char Ctl1_Ctl2,CanMsg_info& tx_message);
 		int CAN_RoboModule_DRV_Online_Check(unsigned char Group,unsigned char Number,CanMsg_info& tx_message);
 		CanMsg_info get_can_txmsg(void);
+        int CAN_rx_parse(CanMsg_info& rx_message);
 
 		unsigned char can_tx_success_flag = 0;
 
 	private:
-
+        short Real_Current_Value[4] = {0};
+        short Real_Velocity_Value[4] = {0};
+        long Real_Position_Value[4] = {0};
+        char Real_Online[4] = {0};
+        char Real_Ctl1_Value[4] = {0};
+        char Real_Ctl2_Value[4] = {0};
 };
 
 #endif
