@@ -1,7 +1,7 @@
 TARGET := vector_test
 
 $(TARGET) : main.cpp
-	g++ -o $@ $<
+	g++ -o $@ $< -g
 
 clean:
-	rm *.o $(TARGET)
+	rm  $(TARGET)
