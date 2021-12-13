@@ -3,10 +3,12 @@
 
 int main(int argc, char *argv[]){
 
-	double startTime,stopTime,durationTimeTime;
-	double start, stop, durationTime;
 	Complex c2(1.0,2.3);
-	std::cout << c2.imag() << std::endl;
+	Complex c1(9.0,4.7);
+
+    c1 += c2;
+
+	std::cout << c1.imag() << std::endl;
 	int i = 0;
 	std::cout << "sizeof class Complex: " << sizeof(Complex) <<std::endl;
 	std::cout << "sizeof double: " << sizeof(double) <<std::endl;
@@ -14,6 +16,8 @@ int main(int argc, char *argv[]){
 	std::cout << "sizeof long long: " << sizeof(long long) <<std::endl;
 
 #if 0
+	double startTime,stopTime,durationTimeTime;
+	double start, stop, durationTime;
 	startTime=time(NULL);
 	start = clock();
 
