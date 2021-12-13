@@ -17,7 +17,7 @@ echo "user $user uid $uid"
 source_dir="$base_dir/../box"
 target_dir="/home/$user/box"
 
-if [ $# != 1 ] ; then
+if [ $# <= 1 ] ; then #one input parameter for start entering to docker, 2 parameters for docker building
     echo "USAGE: $0 options"
     echo "  e.g. $0 start                  --> to enter docker"
     echo "       $0 build [platform]       --> to biuld project"
