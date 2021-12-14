@@ -26,3 +26,5 @@ export APP_MODULES += move_constructor
 export APP_MODULES += namespace 
 export APP_MODULES += unique_ptr_test
 export APP_MODULES += simple_log
+export APP_MODULES += static_test
+export APP_MODULES += volatile_test
