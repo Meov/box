@@ -36,7 +36,7 @@ public:
    }
 #if 1 
    // 移动构造函数
-   MyString(MyString&& str) noexcept
+   MyString(MyString&& str) noexcept //该函数不会抛出异常
        :m_data(str.m_data) {
        MCtor ++;
        str.m_data = nullptr; //不再指向之前的资源了
