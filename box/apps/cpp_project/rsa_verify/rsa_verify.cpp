@@ -17,14 +17,14 @@ RsaVerify::~RsaVerify(){
 }
 
 std::string g_pubkey_string = "-----BEGIN PUBLIC KEY-----\n"\
-                        "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqUy/N0bokuv1m8P7fWGO\n"\
-                        "wPCyxiuXJu+CZ1CIhQ2pLOBf9roSbAOTFBv+bpossV389xqDnEmLS9+Z0GKj5EDa\n"\
-                        "ydLKlP0lOtdvyAVm/QszHoEJ2GhajJ8eioYjvNfm5aQV4IRrmFD79CiUy+YDs4+M\n"\
-                        "GVEtr4jTjrKjuYawIPKIX0KK/FnnLzjz3JRTE7MEIiKr0+60QjamtUjKbMk3AfIT\n"\
-                        "nY6KUGE9suVJisVYsgTywsbcXudCwzBErsubZOJ071pHLY3Y2SjSvjWemxC/jFdm\n"\
-                        "CNmIDhMu5LcpD8qddDt3mZmz/Yh8pD7F2w5pWw7es7IaTt3JoiBmb5n7Mc4/gG5h\n"\
-                        "KQIDAQAB\n"\
-                        "-----END PUBLIC KEY-----\n";
+                              "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs6Zm2p3gUO0nEDm+wTlY\n"\
+                              "DCIOLiMEeFWcc9KfQwqKDq9xI8oriKgW1HkCUvkFr0z93h3riRC4a3/dsL7dxKpi\n"\
+                              "O3w4z2qnEYoktVsIeCH88lFXxe40GzhYhhOeDCPzBTiuC5qCmtD9dTbSUUn48K7x\n"\
+                              "9VicXG9EbW+qmLaG58/bH7w7Lj9FdvzjzT2WOZrHVgCfXMjeREOdOG56hHWI5oTP\n"\
+                              "jAgL9S2Q929mhHsevz+sDmQWnYovYpx7NI4hZh9uBcmMLGacFFvNCV7/y3RMVMSd\n"\
+                              "O1WpNhIpoitd61w7c7NOeHXkvbBgfG1XPcuwlj79fciuz53sxkcjqbeLDsxM5COE\n"\
+                              "IQIDAQAB\n"\
+                              "-----END PUBLIC KEY-----\n";
 
 EVP_PKEY * RsaVerify::load_pubkey(const std::string pubkey_file)
 {
